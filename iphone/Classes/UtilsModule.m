@@ -124,6 +124,19 @@
 	return [TiUtils convertToHex:(unsigned char*)&result length:CC_SHA256_DIGEST_LENGTH];
 }
 
+-(id)hmacSha1:(id)key :(id)message
+{
+	ENSURE_SINGLE_ARG(args,NSObject);
+	NSString *nKey = [self convertToString:keu];
+	NSString *nMessage = [self convertToString:message];
+	const char *cKey = [nKey UTF8String];
+	const char *cMessage = [nMessage UTF8String];
+	unsigned char result[CC_SHA1_DIGEST_LENGTH];
+	CC_SHA256(cStr, [nstr lengthOfBytesUsingEncoding:NSUTF8StringEncoding], result);
+	CCHmac(kCCHmacAlgSHA1, cKey, [nKey lengthOfBytesUsingEncoding:NSUTF8StringEncoding], cMessage, [nMessage lengthOfBytesUsingEncoding:NSUTF8StringEncoding], result);
+	return [TiUtils convertToHex:(unsigned char*)&result length:CC_SHA1_DIGEST_LENGTH];
+}
+
 @end
 
 #endif
